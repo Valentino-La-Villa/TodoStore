@@ -20,7 +20,7 @@ export interface Item {
 
 export const productsFromDatabase: Item[] = [
     {
-        name: 'Rolex',
+        name: 'Golden Watch',
         img: rolexIMG,
         individualPriceUSD: 500,
         id: 1,
@@ -30,7 +30,7 @@ export const productsFromDatabase: Item[] = [
         onStock: true
     },
     {
-        name: 'Black shirt',
+        name: 'Black Shirt',
         img: blackShirtIMG,
         individualPriceUSD: 20,
         id: 2,
@@ -39,7 +39,7 @@ export const productsFromDatabase: Item[] = [
         onStock: true
     },
     {
-        name: 'Wooden Doorknob',
+        name: 'Handmade Doorknob',
         img: woodenDoorknobIMG,
         individualPriceUSD: 5,
         id: 3,
@@ -48,7 +48,7 @@ export const productsFromDatabase: Item[] = [
         onStock: false
     },
     {
-        name: 'Skull Rose hoodie', 
+        name: 'Skull Rose Hoodie', 
         img: skullRoseHoodieIMG,
         individualPriceUSD: 50,
         id: 4,
@@ -58,7 +58,7 @@ export const productsFromDatabase: Item[] = [
         onStock: true
     },
     {
-        name: 'Dark blue Jeans',
+        name: 'Dark Blue Jeans',
         img: darkBlueJeansIMG,
         individualPriceUSD: 35,
         id: 5,
@@ -67,7 +67,7 @@ export const productsFromDatabase: Item[] = [
         onStock: true
     },
     {
-        name: 'Aviator sunglasses',
+        name: 'Aviator Sunglasses',
         img: aviatorSunglassesIMG,
         individualPriceUSD: 15,
         id: 6,

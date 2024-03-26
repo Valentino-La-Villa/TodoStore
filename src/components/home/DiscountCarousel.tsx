@@ -7,7 +7,8 @@ import { CarouselSlide, carouselSlides } from "../../data/carouselSlides"
 export default function DiscountCarousel() {
 
     const items = useAppSelector(state => state.products.items)
-    const discountItemsForCarousel = items.filter(item => item.discount && item.onStock).map((item: Item): CarouselSlide => ({
+
+    let discountItemsForCarousel = items.filter(item => item.discount && item.onStock).map((item: Item): CarouselSlide => ({ // This will only display items that are both on discount and in stock
         title: item.name || '',
         caption: `${item.discount}% OFF`,
         img: item.img,
@@ -16,6 +17,9 @@ export default function DiscountCarousel() {
         redirectURL: '/products'
     })
 )
+    if (discountItemsForCarousel.length > 6) {
+        discountItemsForCarousel = discountItemsForCarousel.slice(0, 5) // This will make it so the slideshow has a limited length (on bigger databases that have 15+ items on discount, not adding this would wreak havoc)
+    }
 
     const itemsForCarousel: (CarouselSlide)[] = [carouselSlides[0], ...discountItemsForCarousel, ...carouselSlides.slice(1)]
 
