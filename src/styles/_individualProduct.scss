@@ -1,0 +1,10 @@
+.individualProduct__buttons--transitionHandler-ON {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.individualProduct__buttons--transitionHandler-OFF {
+    opacity: 0;
+    transition: opacity 300ms;
+    pointer-events: none;
+}
