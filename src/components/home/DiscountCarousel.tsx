@@ -28,7 +28,7 @@ export default function DiscountCarousel() {
             <Carousel.Item key={item.id}>
                 {item.onSale ? 
 
-                <p className="position-absolute z-3 px-2 text-white fw-bold" style={{top: '20px', left: '20px', backgroundColor: 'red', border: '1px solid white', fontFamily: 'Roboto'}}>ON SALE</p> 
+                <p className="position-absolute z-3 px-2 text-white fw-bold" style={{top: '20px', left: '20px', backgroundColor: 'red', border: '1px solid white', fontFamily: 'Roboto', pointerEvents: 'none'}}>ON SALE</p> 
                 : 
                 <></>
                 }
