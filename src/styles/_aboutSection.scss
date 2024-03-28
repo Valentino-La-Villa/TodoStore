@@ -1,0 +1,46 @@
+.about_us__text {
+    font-size: 23px;
+    font-family: 'Montserrat'
+}
+
+@media (max-width: 1450px) {
+    .about_us__text {
+        font-size: 21px
+    }
+}
+
+@media (max-width: 1310px) {
+    .about_us__text {
+        font-size: 18px
+    }
+}
+
+@media (max-width: 1150px) {
+    .about_us__text {
+        font-size: 15px
+    }
+}
+
+@media (max-width: 950px) {
+    .about_us__text {
+        font-size: 12px
+    }
+}
+
+@media (max-width: 800px) {
+    .about_us__text {
+        font-size: 11px
+    }
+}
+
+@media (max-width: 768px) { // At this point the paragraph occupies all 12 columns instead of 6
+    .about_us__text {
+        font-size: 17px
+    }
+}
+
+@media (max-width: 500px) {
+    .about_us__text {
+        font-size: 15px
+    }
+}

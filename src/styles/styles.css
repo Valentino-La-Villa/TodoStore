@@ -122,4 +122,48 @@ p {
   transform: scale(104%);
 }
 
+.about_us__text {
+  font-size: 23px;
+  font-family: "Montserrat";
+}
+
+@media (max-width: 1450px) {
+  .about_us__text {
+    font-size: 21px;
+  }
+}
+@media (max-width: 1310px) {
+  .about_us__text {
+    font-size: 18px;
+  }
+}
+@media (max-width: 1150px) {
+  .about_us__text {
+    font-size: 15px;
+  }
+}
+@media (max-width: 950px) {
+  .about_us__text {
+    font-size: 12px;
+  }
+}
+@media (max-width: 800px) {
+  .about_us__text {
+    font-size: 11px;
+  }
+}
+@media (max-width: 768px) {
+  .about_us__text {
+    font-size: 17px;
+  }
+}
+@media (max-width: 500px) {
+  .about_us__text {
+    font-size: 15px;
+  }
+}
+.contactSection__text {
+  font-family: "Montserrat";
+}
+
 /*# sourceMappingURL=styles.css.map */
