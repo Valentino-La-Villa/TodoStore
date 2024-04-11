@@ -3,6 +3,7 @@
 Features:
 
 * Full front-end, responsive cart system, run by a Redux reducer
+* Individual product pages for every item in the catalogue, rendered using dynamic routing
 * A 'cart' page that's only accessible when the user's shopping cart has items in it 
 * Dynamic slideshow for discounts and general brand exposure on the home-page
 * Easy-to-handle local product database
