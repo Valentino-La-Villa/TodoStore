@@ -32,4 +32,4 @@ const defaultCarouselSides: CarouselSlide[] = [ // These three need to exist so 
 
 // const discountProducts =  products.filter(product => product.discount && product.onStock)
 
-export const carouselSlides: CarouselSlide[] = [...defaultCarouselSides]
+export const defaultCarouselSlides: CarouselSlide[] = [...defaultCarouselSides]

@@ -2,11 +2,23 @@ import { Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useAppSelector } from "../../redux/store"
 import { Item } from "../../data/generalDatabase"
-import { CarouselSlide, carouselSlides } from "../../data/carouselSlides"
+import { CarouselSlide, defaultCarouselSlides } from "../../data/carouselSlides"
+import { useEffect, useState } from "react"
 
 export default function DiscountCarousel() {
 
     const items = useAppSelector(state => state.products.items)
+
+    const [sliderItems, setSliderItems] = useState([defaultCarouselSlides])
+
+    useEffect(()=>{
+        if (discountItemsForCarousel) {
+            setSliderItems(prev => {
+                return prev
+            })
+        }
+        
+    }, [])
 
     let discountItemsForCarousel = items.filter(item => item.discount && item.onStock).map((item: Item): CarouselSlide => ({ // This will only display items that are both on discount and in stock
         title: item.name || '',
@@ -14,14 +26,14 @@ export default function DiscountCarousel() {
         img: item.img,
         id: item.id,
         onSale: true,
-        redirectURL: '/products'
+        redirectURL: `/products/${item.id}`
     })
 )
     if (discountItemsForCarousel.length > 6) {
         discountItemsForCarousel = discountItemsForCarousel.slice(0, 5) // This will make it so the slideshow has a limited length (on bigger databases that have 15+ items on discount, not adding this would wreak havoc)
     }
 
-    const itemsForCarousel: (CarouselSlide)[] = [carouselSlides[0], ...discountItemsForCarousel, ...carouselSlides.slice(1)]
+    const itemsForCarousel: (CarouselSlide)[] = [defaultCarouselSlides[0], ...discountItemsForCarousel, ...defaultCarouselSlides.slice(1)]
 
     const carouselItems = itemsForCarousel.map((item: CarouselSlide) => {
         return (

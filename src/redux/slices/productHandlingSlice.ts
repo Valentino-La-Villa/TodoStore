@@ -2,7 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit"
 import { PayloadAction } from "@reduxjs/toolkit"
 import { Item, availableSizesList, productsFromDatabase } from "../../data/generalDatabase"
 import Swal from "sweetalert2"
-import { PaymentInfoForm } from "../../components/cart/PaymentInfo"
+import { PaymentInfoForm } from "../../components/cart/Checkout"
 import Axios from "axios"
 
 export interface CartItem extends Item {
@@ -25,15 +25,15 @@ export const productHandlingSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        addToCart(state: itemDataState, action: PayloadAction<{ id: number }>) {
+        addToCart(state: itemDataState, action: PayloadAction<{ id: number, size: keyof typeof availableSizesList | 'non-applicable'}>) {
             const itemToAdd: Item | undefined = state.items.find(item => item.id === action.payload.id)
 
             if (typeof(itemToAdd) == 'undefined') throw new Error('Provided ID is invalid. Please, refresh and try again.')
 
-            const itemOnCart: CartItem | undefined = state.cart.find(item => item.id === action.payload.id)
+            const itemOnCart: CartItem | undefined = state.cart.find(item => (item.id === action.payload.id && item.selectedSize == action.payload.size))
 
             if (typeof(itemOnCart) == 'undefined') { // If the item you wish to add to cart is currently not on cart, add it to the cart list
-                const selectedSizeValue: 'unselected' | 'non-applicable' = (itemToAdd.availableSizes === 'non-applicable' ? 'non-applicable' : 'unselected')
+                const selectedSizeValue: keyof typeof availableSizesList | 'non-applicable' = action.payload.size || 'non-applicable'
                 
                 state.cart.push({
                     ...itemToAdd,
@@ -70,13 +70,6 @@ export const productHandlingSlice = createSlice({
                 )
             }
         },
-        selectItemSize(state: itemDataState, action: PayloadAction<{ id: number, size: keyof typeof availableSizesList}>) {
-            const itemOnCart: CartItem | undefined = state.cart.find(item => item.id === action.payload.id)
-
-            if (itemOnCart === undefined) throw new Error('Provided ID does not match any products currently on cart. Please, refresh and try again')
-        
-            itemOnCart.selectedSize = action.payload.size
-        },
         placeOrder(state: itemDataState, action: PayloadAction<{ formData: PaymentInfoForm}>) {
 
             const orderId = nanoid()
@@ -85,7 +78,7 @@ export const productHandlingSlice = createSlice({
             {
                 id: orderId,
                 date: Date.now(),
-                address: action.payload.formData.deliveryAddress,
+                address: action.payload.formData.shippingAddress,
                 email: action.payload.formData.emailAddress,
                 phone: action.payload.formData.phoneNumber,
                 order: state.cart,
@@ -93,14 +86,14 @@ export const productHandlingSlice = createSlice({
             console.log({
                 id: orderId,
                 date: Date.now(),
-                address: action.payload.formData.deliveryAddress,
+                address: action.payload.formData.shippingAddress,
                 email: action.payload.formData.emailAddress,
                 phone: action.payload.formData.phoneNumber,
                 order: state.cart
             })
             Swal.fire({
                 title: 'Thank you for your purchase!',
-                text: `Your order will be sent to ${action.payload.formData.deliveryAddress}`,
+                text: `We will contact you shortly at ${action.payload.formData.emailAddress}`,
                 icon: 'success',
                 confirmButtonText: 'OK'
             })
@@ -111,4 +104,4 @@ export const productHandlingSlice = createSlice({
 
 
 export default productHandlingSlice.reducer
-export const { addToCart, subtractFromCart, removeAllInstancesOfASingleItemFromCart, selectItemSize, placeOrder } = productHandlingSlice.actions
+export const { addToCart, subtractFromCart, removeAllInstancesOfASingleItemFromCart, placeOrder } = productHandlingSlice.actions

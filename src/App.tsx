@@ -7,6 +7,9 @@ import Cart from './components/cart/Cart'
 import { useAppSelector } from './redux/store'
 import { ReactElement } from 'react'
 import Homepage from './components/home/Homepage'
+import IndividualProductPage from './components/products/individualProductPage/IndividualProductPage'
+import NotFound from './components/misc/NotFound'
+import Checkout from './components/cart/Checkout'
 
 function App() {
 
@@ -36,6 +39,12 @@ function App() {
           <Products />
         }/>
 
+        <Route path='/products/:productID'
+        element={
+          <IndividualProductPage />
+        }
+        />
+
         <Route path='/cart'
         element={
           <CartAccessValidation>
@@ -43,6 +52,17 @@ function App() {
           </CartAccessValidation>
         }
         />
+
+        <Route path='/checkout'
+        element={
+          <CartAccessValidation>
+            <Checkout />
+          </CartAccessValidation>
+        }
+        />
+
+        <Route path='/*'
+        element={<NotFound />}/>
       </Routes>
       </main> 
      <Footer />

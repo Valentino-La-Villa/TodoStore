@@ -24,7 +24,7 @@ export default function ContactSection() {
     
 
     const validateContactFormData = (data: ContactFormData): ContactFormDataValidation => {
-        const emailCheck = /\w@\w/
+        const emailCheck = /[A-Za-z]@[A-Za-z].[A-Za-z]/
 
         if (!(Object.values(data).filter(value => (value !== undefined && /\w/.test(value))).length === 4)) { // Checking to see if any input is empty, or has only empty spaces
             return { res: false, err: 'emptyInputs' } // Returning an object to be able to identify the error type and customize the alert popup in the next function

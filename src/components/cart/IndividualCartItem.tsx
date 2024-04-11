@@ -1,4 +1,4 @@
-import { CartItem, selectItemSize } from "../../redux/slices/productHandlingSlice"
+import { CartItem } from "../../redux/slices/productHandlingSlice"
 import trashCanRed from '../../assets/icons/trash-can-red.png'
 import { useAppDispatch } from "../../redux/store"
 import { removeAllInstancesOfASingleItemFromCart } from "../../redux/slices/productHandlingSlice"
@@ -13,7 +13,6 @@ type propsType = {
 export default function IndividualCartItem({props}: propsType) {
 
     const dispatch = useAppDispatch()
-    const handleSelect =(event: any)=> dispatch(selectItemSize({id: props.id, size: event?.target.value}))
     const removeAll =()=> {
         Swal.fire({
             text: `Removed '${props.name}' from cart`,
@@ -48,7 +47,7 @@ export default function IndividualCartItem({props}: propsType) {
 
                         <div className="col-7">
                             <div className="card-body p-2 p-sm-3">
-                                <h5 className="card-title d-flex justify-content-between">{props.name}</h5>
+                                <h5 className="card-title d-flex justify-content-between">{props.name} {props.selectedSize !== 'non-applicable' ? <>- {props.selectedSize}</> : false}</h5>
 
                                 <p className="card-text mt-4 d-flex align-items-center" // Discount display - flex is used in p to level the vertical centerpoints of all three spans
                                 >
@@ -68,17 +67,6 @@ export default function IndividualCartItem({props}: propsType) {
                                     <span className="ms-1 bg-danger p-1 rounded-1 text-white text-center" style={{fontSize: '12px'}}>{props.discount}% OFF!</span>}
                                 </p>
                             </div>
-                            
-                            {props.availableSizes !== 'non-applicable' ? <>
-                            
-                            <select onChange={handleSelect} className="ms-3 form-select d-flex py-0" style={{width: '150px', height: '30px'}} name="" id="">
-                                <option value={'unselected'} defaultValue={'unselected'}>Available sizes</option>
-                                {availableSizesDropdownMenu}
-                            </select></>
-                            
-                            :
-                            
-                            <></>}
                         </div>
 
                         <div className="col-2 p-3 text-end d-flex flex-column justify-content-between">

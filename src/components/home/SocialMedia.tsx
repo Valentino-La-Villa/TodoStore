@@ -24,8 +24,8 @@ export default function SocialMediaButtons() {
 
     const socialMediaButtons = socialMediaLinks.map(socialMedia => {
         return (
-            <div className='col-3 col-md-6 d-flex justify-content-center align-items-center'>
-                    <a key={socialMedia.name}
+            <div key={socialMedia.name} className='col-3 col-md-6 d-flex justify-content-center align-items-center'>
+                    <a
                     className='socialMediaButton--custom' href={socialMedia.link} target='_blank' // Custom css property is used to implement scale up animation on hover
                     >
                         <img className='rounded-3 img-fluid' src={socialMedia.imgURL} alt="" />

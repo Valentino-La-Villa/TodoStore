@@ -12,3 +12,7 @@ export const getFinalPrice=(item: CartItem): number => {
     const finalPrice = getDiscountPrice(item)
     return finalPrice * item.amountOnCart
 }
+
+export const getTotalPriceForCart=(cart: CartItem[]): number => {
+    return cart.map(item => getFinalPrice(item)).reduce((a, b) => a + b)
+}
