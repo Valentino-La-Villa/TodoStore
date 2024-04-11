@@ -4,7 +4,6 @@ import { useAppDispatch } from "../../redux/store"
 import { removeAllInstancesOfASingleItemFromCart } from "../../redux/slices/productHandlingSlice"
 import Swal from "sweetalert2"
 import { getDiscountPrice, getFinalPrice } from "../../utilities/miscFunctions"
-import { ReactElement } from "react"
 
 type propsType = {
     props: CartItem
@@ -20,15 +19,6 @@ export default function IndividualCartItem({props}: propsType) {
             confirmButtonText: 'Continue shopping'
           })
         dispatch(removeAllInstancesOfASingleItemFromCart({id: props.id}))
-    }
-
-    let availableSizesDropdownMenu: ReactElement | ReactElement[] | undefined // It needs this 'undefined' so the compiler doesn't complain when you render it conditionally down below
-    if (props.availableSizes !== 'non-applicable') {
-        availableSizesDropdownMenu = props.availableSizes.map(size => {
-            return (
-                <option key={size} value={size}>{size}</option>
-            )
-        })
     }
 
     return (

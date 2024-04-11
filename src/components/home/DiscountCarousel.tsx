@@ -3,22 +3,10 @@ import { Link } from "react-router-dom"
 import { useAppSelector } from "../../redux/store"
 import { Item } from "../../data/generalDatabase"
 import { CarouselSlide, defaultCarouselSlides } from "../../data/carouselSlides"
-import { useEffect, useState } from "react"
 
 export default function DiscountCarousel() {
 
     const items = useAppSelector(state => state.products.items)
-
-    const [sliderItems, setSliderItems] = useState([defaultCarouselSlides])
-
-    useEffect(()=>{
-        if (discountItemsForCarousel) {
-            setSliderItems(prev => {
-                return prev
-            })
-        }
-        
-    }, [])
 
     let discountItemsForCarousel = items.filter(item => item.discount && item.onStock).map((item: Item): CarouselSlide => ({ // This will only display items that are both on discount and in stock
         title: item.name || '',

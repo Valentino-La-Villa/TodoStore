@@ -58,7 +58,7 @@ export default function Checkout() {
 
         <div className="col-12 d-flex justify-content-center my-5">
 
-            <div className="col-6 bg-secondary border border-2 border-black text-white p-4">
+            <div className="col-11 col-md-8 col-lg-6 bg-secondary border border-2 border-black text-white p-4">
                 <p className="mb-4">
                     After filling out your billing information and sending your order to us, we will manually verify said information, and contact you through the email address provided in order to proceed with payment. Until then, your order will be pending.
                 </p>
