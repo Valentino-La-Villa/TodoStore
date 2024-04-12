@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store"
 import { placeOrder } from "../../redux/slices/productHandlingSlice"
 import { Link } from "react-router-dom"
 import { getTotalPriceForCart } from "../../utilities/miscFunctions"
+import { Tooltip } from "react-tooltip"
 
 
 export type PaymentInfoForm = {
@@ -38,16 +39,16 @@ export default function Checkout() {
         })
     }
 
+    const phoneNumberValidation: boolean = 
+    /[0-9]{4}/.test(formData.phoneNumber) && 
+    !/[A-Za-z]/.test(formData.phoneNumber) // This will filter only phone numbers that have at least 4 consecutive numbers in them, and no letters (it's wired this way in order to allow dashses, plus signs and other necessary things when writing down phone numbers)
+
+    const emailAddressValidation: boolean =
+        /[A-Za-z]@[A-Za-z].[A-Za-z]/.test(formData.emailAddress)
+
+    const shippingAddressValidation: boolean = formData.shippingAddress.length > 5
+
     const orderValidation: boolean = useMemo(()=>{ // This function will only make the 'Place your order' button clickable if all conditions are met (all clothing size selected & properly filled form)
-        const phoneNumberValidation: boolean = 
-            /[0-9]{4}/.test(formData.phoneNumber) && 
-            !/[A-Za-z]/.test(formData.phoneNumber) // This will filter only phone numbers that have at least 4 consecutive numbers in them, and no letters (it's wired this way in order to allow dashses, plus signs and other necessary things when writing down phone numbers)
-
-        const emailAddressValidation: boolean =
-            /[A-Za-z]@[A-Za-z].[A-Za-z]/.test(formData.emailAddress)
-
-        const shippingAddressValidation: boolean = formData.shippingAddress.length > 5
-
         return (phoneNumberValidation && emailAddressValidation &&  shippingAddressValidation && termsAndConditions)
     }, [formData, cart, termsAndConditions])
 
@@ -96,7 +97,7 @@ export default function Checkout() {
                         </div>
 
                         <div className="col-12 d-flex justify-content-end align-items-center pt-5 pe-4">
-                            <p className="me-2">Total price: <span className="fw-bold bg-light p-1 text-success border-1 border border-black">${totalPrice}</span></p>
+                            <p className="me-2">Total price: <span className="fw-bold bg-light p-1 text-success border-1 border border-black">${totalPrice.toFixed(2)}</span></p>
                         </div>
 
                         <hr className="border-light border border-1 mt-4 opacity-100" />
@@ -107,9 +108,22 @@ export default function Checkout() {
                                 <Link to='/cart'>
                                     <button className="btn btn-dark ms-2">← Back to cart</button>
                                 </Link>
-                                <div>
+                                <div
+                                data-tooltip-id="send-order-disabled"
+                                data-tooltip-place="top">
                                     <button disabled={!orderValidation} onClick={sendOrder} className="btn btn-dark me-2">Place your order</button>
                                 </div>
+
+                                
+                                {orderValidation ? <></> : <Tooltip id="send-order-disabled">
+                                    <div className="d-flex flex-column">
+                                        <b>Before submitting your order you must first:</b>
+                                        <span>Agree to the terms and conditions: {termsAndConditions ? <>✅</> : <>❌</>}</span>
+                                        <span >❗Properly fill out:</span>
+                                        <span>Email address field: {emailAddressValidation ? <>✅</> : <>❌</>}</span>
+                                        <span>Phone number field: {phoneNumberValidation ? <>✅</> : <>❌</>}</span>
+                                        <span>Shipping Address field: {shippingAddressValidation ? <>✅</> : <>❌</>}</span>
+                                        </div></Tooltip>}
                             </div>
                         </div>
             </form>
