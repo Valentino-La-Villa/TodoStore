@@ -1,21 +1,17 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import burgerMenuIcon from '../../assets/icons/burgerMenuIcon.png'
-import burgerMenuCloseX from '../../assets/icons/burgerMenuCloseX.png'
 import { useAppSelector } from "../../redux/store";
+import BurgerMenu from "./BurgerMenu";
 
 export default function Navbar() {
 
     const cart = useAppSelector(state => state.products.cart)
 
-    const [burgerMenuVisibility, setBurgerMenuVisibility] = useState(false)
-    const dynamicBurgerMenuClassname = (burgerMenuVisibility ? 'nav--burgerMenu--visible' : 'nav--burgerMenu--hidden')
-
-    const defineStyle = (({isActive}: {isActive: boolean})=> isActive ? 
+    const defineStyle = (({isActive}: {isActive: boolean}) => isActive ? 
     `text-decoration-none text-white defineNavbarFont
     fw-bold`
     :
     `text-decoration-none text-white defineNavbarFont`)
+
 
     return (
         <> 
@@ -50,36 +46,8 @@ export default function Navbar() {
                    d-xl-none 
                    d-flex nav--burgerMenu-list-container justify-content-end ">
                     
-                    <div className="m-0 p-0 d-flex">
-                        <button className="btn p-0" onClick={()=>{setBurgerMenuVisibility(true)}}>
-                            <img className="img-fluid" style={{width: '50px'}} src={burgerMenuIcon}></img>
-                        </button>
-
-                        <main className={dynamicBurgerMenuClassname}>
-                            <ul className="nav--burgerMenu-list">
-                                <li>
-                                    <button className="btn p-0" onClick={()=>{setBurgerMenuVisibility(false)}}>
-                                        <img className="img-fluid" style={{width: '30px'}} src={burgerMenuCloseX}></img>
-                                    </button>
-                                </li>
-                                <li>
-                                    <NavLink className={defineStyle} to={'/'}>Home</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink className={defineStyle} to={'/products'}>Products</NavLink>
-                                </li>
-                                {cart.length >= 1 ? 
-            
-                                <NavLink className={defineStyle} to={'/cart'}>
-                                    <span>Cart</span>
-                                </NavLink>
-                                
-                                :
-                                
-                                <></>}
-                            </ul>
-                        </main>
-                    </div>
+                <BurgerMenu
+                defineStyle={defineStyle} />
         </nav>
         </>
     )

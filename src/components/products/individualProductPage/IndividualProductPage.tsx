@@ -3,6 +3,7 @@ import { useAppSelector } from "../../../redux/store"
 import { Item } from "../../../data/generalDatabase"
 import NotFound from "../../misc/NotFound"
 import ProductInfo from "./ProductInfo"
+import { Tooltip } from "react-bootstrap"
 
 export default function IndividualProductPage() {
 
