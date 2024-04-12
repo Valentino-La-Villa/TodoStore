@@ -46,8 +46,8 @@ export const productHandlingSlice = createSlice({
                 itemOnCart.amountOnCart = itemOnCart.amountOnCart + 1
             } 
         },
-        subtractFromCart(state: itemDataState, action: PayloadAction<{ id: number }>) {
-            const itemToRemove: CartItem | undefined = state.cart.find(item => item.id === action.payload.id)
+        subtractFromCart(state: itemDataState, action: PayloadAction<{ id: number, size: keyof typeof availableSizesList | 'non-applicable' }>) {
+            const itemToRemove: CartItem | undefined = state.cart.find(item => (item.id === action.payload.id && item.selectedSize == action.payload.size))
 
             if (typeof(itemToRemove) == 'undefined') throw new Error('Provided ID does not match any products currently on cart. Please, refresh and try again')
         

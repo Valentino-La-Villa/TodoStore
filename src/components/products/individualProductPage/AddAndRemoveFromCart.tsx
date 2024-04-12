@@ -14,13 +14,16 @@ export default function AddAndRemoveFromCart(props: Props) {
     const cart: CartItem[] = state.cart
     const dispatch = useAppDispatch()
     
-
     const addItemToCart =()=> {
         if (props.selectedSize !== null) {
             dispatch(addToCart({ id: props.currentProduct.id, size: props.selectedSize as keyof typeof availableSizesList | 'non-applicable'}))
         }
     }
-    const subtractItemFromCart =()=> dispatch(subtractFromCart({ id: props.currentProduct.id }))
+    const subtractItemFromCart =()=> {
+        if (props.selectedSize !== null) {
+            dispatch(subtractFromCart({ id: props.currentProduct.id, size: props.selectedSize as keyof typeof availableSizesList | 'non-applicable' }))
+        }
+    }
 
     const currentAmountOnCart: number = cart.find(item => (item.id === props.currentProduct.id && item.selectedSize == props.selectedSize))?.amountOnCart || 0 // This checks for item and size, in order to allow purchases of the same item on multiple sizes separately
     
@@ -50,7 +53,7 @@ export default function AddAndRemoveFromCart(props: Props) {
 
                 {cartButtonValidation ? <></> : <Tooltip id="add-to-cart-disabled"></Tooltip>}
 
-                <div className={`d-flex gap-2 individualProduct__buttons--transitionHandler-${currentAmountOnCart ? 'ON' : 'OFF'}`}>
+                <div className={`d-flex gap-2 individualProduct__buttons--transitionHandler-${currentAmountOnCart > 0 ? 'ON' : 'OFF'}`}>
                         <p>{currentAmountOnCart}</p>
 
                         <button onClick={subtractItemFromCart} className="btn btn-secondary p-0 d-flex justify-content-center individualProductPage__subtractButton">

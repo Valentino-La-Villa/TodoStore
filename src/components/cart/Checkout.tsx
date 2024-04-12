@@ -119,7 +119,7 @@ export default function Checkout() {
                                     <div className="d-flex flex-column">
                                         <b>Before submitting your order you must first:</b>
                                         <span>Agree to the terms and conditions: {termsAndConditions ? <>✅</> : <>❌</>}</span>
-                                        <span >❗Properly fill out:</span>
+                                        <span>❗Properly fill out:</span>
                                         <span>Email address field: {emailAddressValidation ? <>✅</> : <>❌</>}</span>
                                         <span>Phone number field: {phoneNumberValidation ? <>✅</> : <>❌</>}</span>
                                         <span>Shipping Address field: {shippingAddressValidation ? <>✅</> : <>❌</>}</span>
