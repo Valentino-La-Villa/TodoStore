@@ -3,13 +3,15 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { collection, getFirestore } from "firebase/firestore";
 
-const API_KEY = import.meta.env.VITE_FIRESTORE_API_KEY
-const AUTH_DOMAIN = import.meta.env.VITE_FIRESTORE_AUTH_DOMAIN
-const PROJECT_ID = import.meta.env.VITE_FIRESTORE_PROJECT_ID
-const STORAGE_BUCKET = import.meta.env.VITE_FIRESTORE_STORAGE_BUCKET
-const MESSAGING_SENDER_ID = import.meta.env.VITE_FIRESTORE_MESSAGING_SENDER_ID
-const APP_ID = import.meta.env.VITE_FIRESTORE_APP_ID
-const MEASUREMENT_ID = import.meta.env.VITE_FIRESTORE_MEASUREMENT_ID
+const environment = import.meta.env
+
+const API_KEY = environment.VITE_FIRESTORE_API_KEY
+const AUTH_DOMAIN = environment.VITE_FIRESTORE_AUTH_DOMAIN
+const PROJECT_ID = environment.VITE_FIRESTORE_PROJECT_ID
+const STORAGE_BUCKET = environment.VITE_FIRESTORE_STORAGE_BUCKET
+const MESSAGING_SENDER_ID = environment.VITE_FIRESTORE_MESSAGING_SENDER_ID
+const APP_ID = environment.VITE_FIRESTORE_APP_ID
+const MEASUREMENT_ID = environment.VITE_FIRESTORE_MEASUREMENT_ID
 
 const firebaseConfig = {
     apiKey: API_KEY,
