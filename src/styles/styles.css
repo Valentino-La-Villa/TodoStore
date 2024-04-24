@@ -102,6 +102,10 @@ p {
   margin: 0;
 }
 
+.getTargetPointer:hover {
+  cursor: pointer;
+}
+
 .individualProduct__buttons--transitionHandler-ON {
   opacity: 1;
   transition: opacity 300ms;

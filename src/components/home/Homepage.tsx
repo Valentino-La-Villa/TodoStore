@@ -5,6 +5,7 @@ import SocialMediaButtons from "./SocialMedia.tsx";
 
 
 export default function Homepage() {
+
     return (
         <div className="container-fluid d-flex gap-5 flex-column py-4 px-0">
 

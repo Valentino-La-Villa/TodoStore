@@ -6,7 +6,7 @@ export interface CarouselSlide {
     title?: string,
     caption?: string,
     img: string,
-    id: number,
+    order: number,
     onSale?: boolean,
     redirectURL: string,
 }
@@ -14,18 +14,18 @@ export interface CarouselSlide {
 const defaultCarouselSides: CarouselSlide[] = [ // These three need to exist so that the slideshow isn't empty when there are no current offers
     {
         img: todoStore,
-        id: 9999997,
+        order: 9999997,
         redirectURL: ''
     },
     {
         caption: 'Now available on France, Germany and Switzerland',
         img: map,
-        id: 9999998,
+        order: 9999998,
         redirectURL: '',
     },
     {
         img: storeBackground,
-        id: 9999999,
+        order: 9999999,
         redirectURL: '',
     },
 ]

@@ -80,7 +80,7 @@ export default function ContactSection() {
             <form onSubmit={handleContactFormSubmit} className="container-fluid my-5 justify-content-center d-flex"
             > 
                 
-                <div className="col-12 col-md-8 col-lg-7 col-xl-5 row d-flex gap-1 px-3 px-sm-5 py-5 rounded-2 border border-secondary">
+                <div className="col-12 col-md-8 col-lg-7 col-xl-5 row d-flex gap-1 px-3 px-sm-5 py-5 rounded-2 border border-secondary" style={{backgroundColor: '#d9e3f2'}}>
                     
                     <label htmlFor="contactForm__name" className="contactSection__text">Your name</label>
                     <input ref={contactFormName}
@@ -99,7 +99,7 @@ export default function ContactSection() {
                      className="mb-4 form-control bg-secondary text-white" id="contactForm__message" />
                     
                     <div className="col-12 d-flex justify-content-end p-0">
-                        <button className="btn btn-dark col-5 col-sm-3">Submit</button>
+                        <button className="btn btn-outline-dark col-5 col-sm-3">Submit</button>
                     </div>
                 </div>
 

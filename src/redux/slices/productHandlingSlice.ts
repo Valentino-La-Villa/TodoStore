@@ -1,39 +1,83 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { PayloadAction } from "@reduxjs/toolkit"
-import { Item, availableSizesList, productsFromDatabase } from "../../data/generalDatabase"
+import { CartItem, ClothingSize, Item } from "../../data/generalDatabase"
 import Swal from "sweetalert2"
-import { PaymentInfoForm } from "../../components/cart/Checkout"
-import Axios from "axios"
-
-export interface CartItem extends Item {
-    amountOnCart: number,
-    selectedSize: 'unselected' | keyof typeof availableSizesList | 'non-applicable' // 'Unselected' is for clothings whose size hasn't yet been set-up and serves as a filter for cart management. 'non-applicable' is for products such as watches or pans, that only come in one size.
-}
+import { DataSentToServer } from "../../components/cart/Checkout"
+import { productsCollection, ordersCollection } from "../../data/firebase"
+import { addDoc, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore"
 
 export interface itemDataState {
-    items: Item[],
+    items: {
+        data: Item[],
+        status: 'idle' | 'loading' | 'success' | 'failed',
+        error: null | string
+    },
     cart: CartItem[],
+    orderStatus: 'idle' | 'loading' | 'success' | 'failed'
 }
 
 const initialState: itemDataState = {
-    items: productsFromDatabase, // This would ideally be pulled from an API or online database
-    cart: []
+    items: {
+        data: [],
+        status: 'idle',
+        error: null
+    },
+    cart: [],
+    orderStatus: 'idle'
 }
+
+export const getProductListFromDatabase = createAsyncThunk('items/getProductListFromDatabase', async() => { // Acepta un string que va a funcionar como prefijo para los actiontypes creados y una función callback que oficia de 'payload creator', que debería retornar una promesa conteniendo datos de algún tipo, o una promesa rejecteada con un error
+    const orderedProducts = query(productsCollection, orderBy('orderInCatalog', 'asc'))
+    const productDatabase: void | Item[] = await getDocs(orderedProducts).then(
+        (snapshot) => {
+            let products: Item[] = []
+            snapshot.docs.forEach((doc) => {
+    
+                const data: Omit<Item, 'id'> = doc.data() as Omit<Item, 'id'>
+    
+                products.push({
+                    ...data,
+                    id: doc.id
+                })
+            })
+            return products
+        }
+    ).catch(err => console.log(err))
+
+    if (typeof(productDatabase) === 'object') {
+        return productDatabase as Item[]
+    }
+})
+
+export const deliverOrderToDatabase = createAsyncThunk('checkout/deliverOrderToDatabase', async(payload: DataSentToServer)=> {
+    try {
+        addDoc(ordersCollection, {
+            createdAt: serverTimestamp(),
+            shippingAddress: payload.formData.shippingAddress,
+            email: payload.formData.emailAddress,
+            phone: payload.formData.phoneNumber,
+            order: payload.cartJson,
+            totalPriceUSD: payload.totalPriceUSD
+        })
+        return payload
+    }
+    catch(err) {console.log(err)}
+})
 
 
 export const productHandlingSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        addToCart(state: itemDataState, action: PayloadAction<{ id: number, size: keyof typeof availableSizesList | 'non-applicable'}>) {
-            const itemToAdd: Item | undefined = state.items.find(item => item.id === action.payload.id)
+        addToCart(state: itemDataState, action: PayloadAction<{ id: string, size: ClothingSize | 'non-applicable'}>) {
+            const itemToAdd: Item | undefined = state.items.data.find(item => item.id === action.payload.id)
 
             if (typeof(itemToAdd) == 'undefined') throw new Error('Provided ID is invalid. Please, refresh and try again.')
 
             const itemOnCart: CartItem | undefined = state.cart.find(item => (item.id === action.payload.id && item.selectedSize == action.payload.size))
 
             if (typeof(itemOnCart) == 'undefined') { // If the item you wish to add to cart is currently not on cart, add it to the cart list
-                const selectedSizeValue: keyof typeof availableSizesList | 'non-applicable' = action.payload.size || 'non-applicable'
+                const selectedSizeValue: ClothingSize | 'non-applicable' = action.payload.size || 'non-applicable'
                 
                 state.cart.push({
                     ...itemToAdd,
@@ -46,7 +90,7 @@ export const productHandlingSlice = createSlice({
                 itemOnCart.amountOnCart = itemOnCart.amountOnCart + 1
             } 
         },
-        subtractFromCart(state: itemDataState, action: PayloadAction<{ id: number, size: keyof typeof availableSizesList | 'non-applicable' }>) {
+        subtractFromCart(state: itemDataState, action: PayloadAction<{ id: string, size: ClothingSize | 'non-applicable' }>) {
             const itemToRemove: CartItem | undefined = state.cart.find(item => (item.id === action.payload.id && item.selectedSize == action.payload.size))
 
             if (typeof(itemToRemove) == 'undefined') throw new Error('Provided ID does not match any products currently on cart. Please, refresh and try again')
@@ -61,7 +105,7 @@ export const productHandlingSlice = createSlice({
                 itemToRemove.amountOnCart = itemToRemove.amountOnCart - 1
             }
         },
-        removeAllInstancesOfASingleItemFromCart(state: itemDataState, action: PayloadAction<{ id: number }>) {
+        removeAllInstancesOfASingleItemFromCart(state: itemDataState, action: PayloadAction<{ id: string }>) {
             const itemToRemove: CartItem | undefined = state.cart.find(item => item.id === action.payload.id)
             if (itemToRemove) {
                 state.cart.splice(
@@ -69,39 +113,47 @@ export const productHandlingSlice = createSlice({
                     state.cart.indexOf(itemToRemove) + 1
                 )
             }
-        },
-        placeOrder(state: itemDataState, action: PayloadAction<{ formData: PaymentInfoForm}>) {
-
-            const orderId = nanoid()
-
-            Axios.post('https://jsonplaceholder.typicode.com/posts', 
-            {
-                id: orderId,
-                date: Date.now(),
-                address: action.payload.formData.shippingAddress,
-                email: action.payload.formData.emailAddress,
-                phone: action.payload.formData.phoneNumber,
-                order: state.cart,
-            })
-            console.log({
-                id: orderId,
-                date: Date.now(),
-                address: action.payload.formData.shippingAddress,
-                email: action.payload.formData.emailAddress,
-                phone: action.payload.formData.phoneNumber,
-                order: state.cart
-            })
-            Swal.fire({
-                title: 'Thank you for your purchase!',
-                text: `We will contact you shortly at ${action.payload.formData.emailAddress}`,
-                icon: 'success',
-                confirmButtonText: 'OK'
-            })
-            state.cart = []
         }
     },
+    extraReducers(builder) {
+        builder
+            .addCase(getProductListFromDatabase.pending, (state: itemDataState) => {
+                state.items.status = 'loading'
+            })
+            .addCase(getProductListFromDatabase.fulfilled, (state: itemDataState, action ) => {
+                state.items.status = 'success'
+                state.items.data = action.payload as Item[]
+            })
+            .addCase(getProductListFromDatabase.rejected, (state: itemDataState) => {
+                state.items.status = 'failed'
+            }),
+        
+        builder
+            .addCase(deliverOrderToDatabase.pending, (state: itemDataState) => {
+                state.orderStatus = 'loading'
+            })
+            .addCase(deliverOrderToDatabase.fulfilled, (state: itemDataState, action) => {
+                state.orderStatus = 'success'
+                Swal.fire({
+                    title: 'Thank you for your purchase!',
+                    text: `We will contact you shortly at ${(action.payload as DataSentToServer).formData.emailAddress}`,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+                    state.cart = []
+            })
+            .addCase(deliverOrderToDatabase.rejected, (state: itemDataState) => {
+                state.orderStatus = 'failed'
+                Swal.fire({
+                    title: 'An unexpected error has happened!',
+                    text: `Please, refresh the page and try again`,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
+            })
+    }
 })
 
 
 export default productHandlingSlice.reducer
-export const { addToCart, subtractFromCart, removeAllInstancesOfASingleItemFromCart, placeOrder } = productHandlingSlice.actions
+export const { addToCart, subtractFromCart, removeAllInstancesOfASingleItemFromCart } = productHandlingSlice.actions

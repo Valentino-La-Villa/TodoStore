@@ -1,9 +1,9 @@
-import { CartItem } from "../../redux/slices/productHandlingSlice"
 import trashCanRed from '../../assets/icons/trash-can-red.png'
 import { useAppDispatch } from "../../redux/store"
 import { removeAllInstancesOfASingleItemFromCart } from "../../redux/slices/productHandlingSlice"
 import Swal from "sweetalert2"
 import { getDiscountPrice, getFinalPrice } from "../../utilities/miscFunctions"
+import { CartItem } from '../../data/generalDatabase'
 
 type propsType = {
     props: CartItem
