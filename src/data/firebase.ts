@@ -2,17 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { collection, getFirestore } from "firebase/firestore";
-import 'vite/client'
 
-const environment: ImportMeta = import.meta
-
-const API_KEY = environment.env.VITE_FIRESTORE_API_KEY
-const AUTH_DOMAIN = environment.env.VITE_FIRESTORE_AUTH_DOMAIN
-const PROJECT_ID = environment.env.VITE_FIRESTORE_PROJECT_ID
-const STORAGE_BUCKET = environment.env.VITE_FIRESTORE_STORAGE_BUCKET
-const MESSAGING_SENDER_ID = environment.env.VITE_FIRESTORE_MESSAGING_SENDER_ID
-const APP_ID = environment.env.VITE_FIRESTORE_APP_ID
-const MEASUREMENT_ID = environment.env.VITE_FIRESTORE_MEASUREMENT_ID
+const API_KEY = import.meta.env.VITE_FIRESTORE_API_KEY
+const AUTH_DOMAIN = import.meta.env.VITE_FIRESTORE_AUTH_DOMAIN
+const PROJECT_ID = import.meta.env.VITE_FIRESTORE_PROJECT_ID
+const STORAGE_BUCKET = import.meta.env.VITE_FIRESTORE_STORAGE_BUCKET
+const MESSAGING_SENDER_ID = import.meta.env.VITE_FIRESTORE_MESSAGING_SENDER_ID
+const APP_ID = import.meta.env.VITE_FIRESTORE_APP_ID
+const MEASUREMENT_ID = import.meta.env.VITE_FIRESTORE_MEASUREMENT_ID
 
 const firebaseConfig = {
     apiKey: API_KEY,
@@ -23,6 +20,7 @@ const firebaseConfig = {
     appId: APP_ID,
     measurementId: MEASUREMENT_ID
 };
+  
   
 const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app); analytics
