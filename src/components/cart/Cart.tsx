@@ -1,9 +1,9 @@
 import { useAppSelector } from "../../redux/store"
 import IndividualCartItem from "./IndividualCartItem"
-import { CartItem } from "../../redux/slices/productHandlingSlice"
 import { ReactElement } from "react"
 import { Link } from "react-router-dom"
 import { getTotalPriceForCart } from "../../utilities/miscFunctions"
+import { CartItem } from "../../data/generalDatabase"
 
 export default function Cart() {
 

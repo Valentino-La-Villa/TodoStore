@@ -3,6 +3,7 @@ import burgerMenuIcon from '../../assets/icons/burgerMenuIcon.png'
 import burgerMenuCloseX from '../../assets/icons/burgerMenuCloseX.png'
 import { NavLink } from "react-router-dom"
 import { useAppSelector } from "../../redux/store"
+import { ClickAwayListener } from "@mui/material"
 
 type Props = {
     defineStyle: ({ isActive }: {
@@ -18,7 +19,8 @@ export default function BurgerMenu(props: Props) {
     const dynamicBurgerMenuClassname = (burgerMenuVisibility ? 'nav--burgerMenu--visible p-4' : 'nav--burgerMenu--hidden')
 
     return (
-        <div className="m-0 p-0 d-flex">
+        <ClickAwayListener onClickAway={()=>{setBurgerMenuVisibility(false)}}>
+            <div className="m-0 p-0 d-flex">
             <button className="btn p-0" onClick={()=>{setBurgerMenuVisibility(true)}}>
                 <img className="img-fluid" style={{width: '50px'}} src={burgerMenuIcon}></img>
             </button>
@@ -48,5 +50,6 @@ export default function BurgerMenu(props: Props) {
                 </ul>
             </main>
         </div>
+        </ClickAwayListener>
     )
 }

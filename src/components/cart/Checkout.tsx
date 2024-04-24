@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../redux/store"
-import { placeOrder } from "../../redux/slices/productHandlingSlice"
+import { deliverOrderToDatabase } from "../../redux/slices/productHandlingSlice"
 import { Link } from "react-router-dom"
 import { getTotalPriceForCart } from "../../utilities/miscFunctions"
 import { Tooltip } from "react-tooltip"
@@ -10,6 +10,12 @@ export type PaymentInfoForm = {
     emailAddress: string,
     phoneNumber: string, // Saving it as a string to account for '+' '-' and other anomalies in phone numbers
     shippingAddress: string
+}
+
+export type DataSentToServer = {
+    formData: PaymentInfoForm,
+    totalPriceUSD: number,
+    cartJson: string[]
 }
 
 export default function Checkout() {
@@ -22,13 +28,14 @@ export default function Checkout() {
 
     const [termsAndConditions, setTermsAndConditions] = useState<boolean>(false)
 
-    
     const cart = useAppSelector(state => state.products.cart)
     const dispatch = useAppDispatch()
     
     const sendOrder =()=> {
         event?.preventDefault()
-        dispatch(placeOrder({formData: formData}))
+        const cartToJson: string[] = cart.map(itemOnCart => 
+            `${itemOnCart.name}${itemOnCart.selectedSize == 'non-applicable' ? '' : ` - ${itemOnCart.selectedSize}`}: ${itemOnCart.amountOnCart} units ordered`)
+        dispatch(deliverOrderToDatabase({formData: formData, totalPriceUSD: totalPrice, cartJson: cartToJson}))
     }
     const handleForm=(event: any)=> {
         setFormData(prev => {
@@ -72,7 +79,7 @@ export default function Checkout() {
         </div>
 
         <div className="col-12 d-flex justify-content-center mb-4">
-            <form className="row container bg-primary text-white rounded px-2 pt-4 pb-2 d-flex"  style={{maxWidth: '800px'}}>
+            <form className="row container border border-1 border-black rounded px-2 pt-4 pb-2 d-flex" style={{maxWidth: '800px', backgroundColor: '#d9e3f2'}}>
                         
                         <div className="col-6 col-md-4 d-flex justify-content-center">
                             <div className="col-12 gap-2 d-flex flex-column" style={{maxWidth: '200px'}}>
@@ -100,30 +107,36 @@ export default function Checkout() {
                             <p className="me-2">Total price: <span className="fw-bold bg-light p-1 text-success border-1 border border-black">${totalPrice.toFixed(2)}</span></p>
                         </div>
 
-                        <hr className="border-light border border-1 mt-4 opacity-100" />
+                        <hr className="border-black border border-1 mt-4 opacity-100" />
 
                         <div className="mb-3 col-12">
 
                             <div className="col-12 d-flex justify-content-between px-md-4 align-items-end">
                                 <Link to='/cart'>
-                                    <button className="btn btn-dark ms-2">← Back to cart</button>
+                                    <button className="btn btn-outline-primary ms-2">← Back to cart</button>
                                 </Link>
-                                <div
-                                data-tooltip-id="send-order-disabled"
-                                data-tooltip-place="top">
-                                    <button disabled={!orderValidation} onClick={sendOrder} className="btn btn-dark me-2">Place your order</button>
-                                </div>
 
+                                <div className="d-flex align-items-center">
+                                    <div
+                                    data-tooltip-id="send-order-disabled"
+                                    data-tooltip-place="top">
+                                        <button disabled={!orderValidation} onClick={sendOrder} className="btn btn-outline-primary me-2">Place your order</button>
+                                    </div>
+                                </div>
                                 
-                                {orderValidation ? <></> : <Tooltip id="send-order-disabled">
+                                {orderValidation ? 
+                                <></> 
+                                : 
+                                <Tooltip id="send-order-disabled">
                                     <div className="d-flex flex-column">
                                         <b>Before submitting your order you must first:</b>
                                         <span>Agree to the terms and conditions: {termsAndConditions ? <>✅</> : <>❌</>}</span>
                                         <span>❗Properly fill out:</span>
                                         <span>Email address field: {emailAddressValidation ? <>✅</> : <>❌</>}</span>
                                         <span>Phone number field: {phoneNumberValidation ? <>✅</> : <>❌</>}</span>
-                                        <span>Shipping Address field: {shippingAddressValidation ? <>✅</> : <>❌</>}</span>
-                                        </div></Tooltip>}
+                                        <span>Shipping address field: {shippingAddressValidation ? <>✅</> : <>❌</>}</span>
+                                    </div>
+                                </Tooltip>}
                             </div>
                         </div>
             </form>

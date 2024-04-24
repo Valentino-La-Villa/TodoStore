@@ -6,13 +6,13 @@ import { CarouselSlide, defaultCarouselSlides } from "../../data/carouselSlides"
 
 export default function DiscountCarousel() {
 
-    const items = useAppSelector(state => state.products.items)
+    const items = useAppSelector(state => state.products.items.data)
 
     let discountItemsForCarousel = items.filter(item => item.discount && item.onStock).map((item: Item): CarouselSlide => ({ // This will only display items that are both on discount and in stock
         title: item.name || '',
         caption: `${item.discount}% OFF`,
         img: item.img,
-        id: item.id,
+        order: item.orderInCatalog,
         onSale: true,
         redirectURL: `/products/${item.id}`
     })
@@ -25,7 +25,7 @@ export default function DiscountCarousel() {
 
     const carouselItems = itemsForCarousel.map((item: CarouselSlide) => {
         return (
-            <Carousel.Item key={item.id}>
+            <Carousel.Item key={item.order}>
                 {item.onSale ? 
 
                 <p className="position-absolute z-3 px-2 text-white fw-bold" style={{top: '20px', left: '20px', backgroundColor: 'red', border: '1px solid white', fontFamily: 'Roboto', pointerEvents: 'none'}}>ON SALE</p> 

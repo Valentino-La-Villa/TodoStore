@@ -1,11 +1,11 @@
 import { Tooltip } from "react-tooltip"
-import { Item, availableSizesList } from "../../../data/generalDatabase"
-import { CartItem, addToCart, subtractFromCart } from "../../../redux/slices/productHandlingSlice"
+import { CartItem, ClothingSize, Item } from "../../../data/generalDatabase"
+import { addToCart, subtractFromCart } from "../../../redux/slices/productHandlingSlice"
 import { useAppDispatch, useAppSelector } from "../../../redux/store"
 
 type Props = {
     currentProduct: Item,
-    selectedSize: keyof typeof availableSizesList | 'non-applicable' | 'unselected',
+    selectedSize: ClothingSize | 'non-applicable' | 'unselected',
 }
 
 export default function AddAndRemoveFromCart(props: Props) {
@@ -16,12 +16,12 @@ export default function AddAndRemoveFromCart(props: Props) {
     
     const addItemToCart =()=> {
         if (props.selectedSize !== null) {
-            dispatch(addToCart({ id: props.currentProduct.id, size: props.selectedSize as keyof typeof availableSizesList | 'non-applicable'}))
+            dispatch(addToCart({ id: props.currentProduct.id, size: props.selectedSize as ClothingSize | 'non-applicable'}))
         }
     }
     const subtractItemFromCart =()=> {
         if (props.selectedSize !== null) {
-            dispatch(subtractFromCart({ id: props.currentProduct.id, size: props.selectedSize as keyof typeof availableSizesList | 'non-applicable' }))
+            dispatch(subtractFromCart({ id: props.currentProduct.id, size: props.selectedSize as ClothingSize | 'non-applicable' }))
         }
     }
 
