@@ -1,4 +1,4 @@
-# Generic online store website
+# TodoStore - an online storefront
 
 Features:
 
