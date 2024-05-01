@@ -48,13 +48,15 @@ export default function IndividualProductPage() {
                         <img src={currentProduct.img} className="img-fluid border border-primary border-4 rounded-1 object-fit-cover bg-primary w-100" style={{minHeight: '350px'}} alt=""/>
                     </section>
 
-                    <div className="col-12 col-md-8 mt-4 mt-md-0">
+                    <section className="col-12 col-md-8 mt-4 mt-md-0">
 
                         <div className="d-flex flex-column justify-content-between h-100">
                             
-                            <ProductInfo
-                            currentProduct={currentProduct} />
-                    
+                            <section>
+                                <ProductInfo
+                                currentProduct={currentProduct} />
+                            </section>
+                            
                             <div>
                                 {selectedSize != 'non-applicable' ?  // Available sizes interface, only shown in products for which you have to pick a size
 
@@ -71,7 +73,7 @@ export default function IndividualProductPage() {
                                 
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </section>
         </main>

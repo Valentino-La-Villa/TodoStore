@@ -34,7 +34,7 @@ export default function IndividualProductComponent({props}: propsType) {
                 </div>
                 <div className="card-body d-flex flex-column justify-content-between">
                     <div>
-                    <h5 className="card-title">{props.name}</h5>
+                    <h2 className="card-title fs-5">{props.name}</h2>
 
                         { props.discount ? // Discount interface
 

@@ -37,7 +37,7 @@ export default function IndividualCartItem({props}: propsType) {
 
                         <section className="col-7">
                             <div className="card-body p-2 p-sm-3">
-                                <h5 className="card-title d-flex justify-content-between">{props.name} {props.selectedSize !== 'non-applicable' ? <>- {props.selectedSize}</> : false}</h5>
+                                <h1 className="card-title d-flex justify-content-between fs-5">{props.name} {props.selectedSize !== 'non-applicable' ? <>- {props.selectedSize}</> : false}</h1>
 
                                 <p className="card-text mt-4 d-flex align-items-center" // Discount display - flex is used in p to level the vertical centerpoints of all three spans
                                 >
