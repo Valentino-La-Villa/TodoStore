@@ -2,7 +2,7 @@ import Warehouse from '../../assets/decoration/Warehouse.jpg'
 
 export default function AboutSection() {
     return (
-        <div className="col-12 w-100 bg-dark text-white pt-5 px-3 d-flex flex-column gap-5" style={{paddingBottom: '70px'}}>
+        <section className="col-12 w-100 bg-dark text-white pt-5 px-3 d-flex flex-column gap-5" style={{paddingBottom: '70px'}}>
             <h1 className="col-12 text-center pt-4" style={{fontFamily: 'Bebas Neue'}}>About us</h1>
 
             <div className="row">
@@ -21,6 +21,6 @@ export default function AboutSection() {
                     <p className='about_us__text mt-4'>Join us at Todo Store, where practicality meets elegance, and discover the perfect blend of function and fashion.</p> 
                 </aside>
             </div>
-        </div>
+        </section>
     )
 }

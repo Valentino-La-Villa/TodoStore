@@ -49,10 +49,10 @@ export default function DiscountCarousel() {
         )
     })
     return (
-        <div className="col-12 col-md-6">
+        <section className="col-12 col-md-6">
             <Carousel>
                 {carouselItems}
             </Carousel>
-        </div>
+        </section>
     )
 }

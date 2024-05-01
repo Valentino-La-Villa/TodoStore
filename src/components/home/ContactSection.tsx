@@ -73,7 +73,7 @@ export default function ContactSection() {
     }
 
     return (
-        <main className="container-fluid my-5 text-center w-100">
+        <section className="container-fluid my-5 text-center w-100">
             
             <h1 className="col-12 text-center pt-4" style={{fontFamily: 'Bebas Neue'}}>Contact us</h1>
 
@@ -104,6 +104,6 @@ export default function ContactSection() {
                 </div>
 
             </form>
-        </main>
+        </section>
     )
 }

@@ -62,7 +62,7 @@ export default function Checkout() {
     const totalPrice = getTotalPriceForCart(cart)
 
     return (
-        <>
+        <main>
 
         <div className="col-12 d-flex justify-content-center my-5">
 
@@ -141,6 +141,6 @@ export default function Checkout() {
                         </div>
             </form>
         </div>
-        </>
+        </main>
     )
 }

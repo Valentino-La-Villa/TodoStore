@@ -46,7 +46,7 @@ export default function ProductFiltering(props: Props) {
     const isPopperOpen = Boolean(anchorElForPopper);
 
     const typeFilter: ReactElement = 
-    <div className="transitionForProductTypeFilter">
+    <section className="transitionForProductTypeFilter">
         <div className="border border-1 border-black p-2 bg-white rounded-1">
             <div className="d-flex flex-column align-items-end py-2 ps-3 fw-semibold text-secondary">
 
@@ -76,7 +76,7 @@ export default function ProductFiltering(props: Props) {
                 </label>
             </div>
         </div>
-    </div>
+    </section>
 
     return (
         <form className="container rounded-3 border border-1 border-primary p-4 my-3" style={{backgroundColor: '#d9e3f2'}}>

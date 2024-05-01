@@ -5,7 +5,7 @@ export default function LoadingScreenProducts() {
 
     const finalDisplay = [1, 2, 3, 4, 5, 6, 7, 8].map(()=>{ return (
 
-        <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center" // Column placement is handled up here
+        <main className="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center" // Column placement is handled up here
             key={nanoid()}>
                 <div className="card" style={{width: "18rem", height: '32rem', position: "relative", // Position relative is needed for the grey filter on disabled items
                     pointerEvents: 'none'
@@ -35,7 +35,7 @@ export default function LoadingScreenProducts() {
                     </div>
                 </div>
 
-            </div>
+            </main>
 
     )})
 

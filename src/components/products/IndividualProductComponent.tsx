@@ -10,7 +10,7 @@ type propsType = {
 export default function IndividualProductComponent({props}: propsType) {
 
     return (
-        <div className="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
+        <article className="col-12 col-sm-6 col-md-4 col-lg-3 p-2 d-flex justify-content-center">
             <div className="card" style={{width: "18rem", minHeight: '27rem', maxHeight: '35rem', position: "relative", // Position relative is needed for the grey filter on disabled items
             pointerEvents: props.onStock ? 'auto' : 'none',  // This will disable the pointer events if the item is not in stock
             }}
@@ -62,6 +62,6 @@ export default function IndividualProductComponent({props}: propsType) {
 
                 </div>
             </div>
-        </div>
+        </article>
     )
 }

@@ -37,7 +37,7 @@ export default function AddAndRemoveFromCart(props: Props) {
     const cartButtonValidation = validateAddToCartButton()
 
     return (
-        <div className="d-flex flex-row align-items-end mt-4">
+        <section className="d-flex flex-row align-items-end mt-4">
             <div className="d-flex align-items-center gap-3">
 
                 <div
@@ -61,6 +61,6 @@ export default function AddAndRemoveFromCart(props: Props) {
                         </button>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }

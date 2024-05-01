@@ -47,7 +47,7 @@ export default function Products() {
     }
 
     return (
-        <div className="container mt-4">
+        <main className="container mt-4">
             <div className="row d-flex g-3">
                 <ProductFiltering 
                 productFilter={productFilter}
@@ -55,6 +55,6 @@ export default function Products() {
 
                 {productDisplay}
             </div>
-        </div>
+        </main>
     )
 }

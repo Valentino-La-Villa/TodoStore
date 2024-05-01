@@ -38,13 +38,15 @@ export default function IndividualProductPage() {
     }
 
     return (
-        <div className="p-2 p-sm-0">
+        <main className="p-2 p-sm-0">
 
             <Link to='/products'><button className="ms-4 mt-4 btn btn-outline-dark">← Back to our catalog</button></Link>
-            <div className="container mt-5 border border-2 border-secondary rounded-3 p-4">
+            <section className="container mt-5 border border-2 border-secondary rounded-3 p-4">
                 <div className="row">
 
-                    <div className="col-12 col-md-4 d-flex justify-content-center"><img src={currentProduct.img} className="img-fluid border border-primary border-4 rounded-1 object-fit-cover bg-primary w-100" style={{minHeight: '350px'}} alt=""/></div>
+                    <section className="col-12 col-md-4 d-flex justify-content-center">
+                        <img src={currentProduct.img} className="img-fluid border border-primary border-4 rounded-1 object-fit-cover bg-primary w-100" style={{minHeight: '350px'}} alt=""/>
+                    </section>
 
                     <div className="col-12 col-md-8 mt-4 mt-md-0">
 
@@ -54,10 +56,14 @@ export default function IndividualProductPage() {
                             currentProduct={currentProduct} />
                     
                             <div>
+                                {selectedSize != 'non-applicable' ?  // Available sizes interface, only shown in products for which you have to pick a size
+
                                 <AvailableSizesInterface
-                                availableSizes={currentProduct.availableSizes}
+                                availableSizes={currentProduct.availableSizes as ClothingSize[]} // Using a type assertion here because if this gets rendered, 'non-applicable' will never be the value passed (because of the ternary used above)
                                 setSelectedSize={setSelectedSize}
-                                availableSizesDropdownMenu={availableSizesDropdownMenu} />
+                                availableSizesDropdownMenu={availableSizesDropdownMenu} /> 
+                                
+                                : <></>}
                                 
                                 <AddAndRemoveFromCart 
                                 currentProduct={currentProduct}
@@ -67,10 +73,7 @@ export default function IndividualProductPage() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            
-
-        </div>
+            </section>
+        </main>
     )
 }

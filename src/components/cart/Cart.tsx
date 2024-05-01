@@ -21,14 +21,17 @@ export default function Cart() {
     const totalPrice = getTotalPriceForCart(shoppingCart)
 
     return (
-        <div className="container-fluid mt-5">
-            <div className="col-12 d-flex justify-content-center mb-4">
+        <main className="container-fluid mt-5">
+            <section className="col-12 d-flex justify-content-center mb-4">
                 <div className="container bg-primary text-white rounded p-4 d-flex gap-4 justify-content-between align-items-center"  style={{maxWidth: '800px'}}>
                     <p>Total price: <span className="fw-bold bg-light p-1 text-success border-1 border border-black">${totalPrice.toFixed(2)}</span></p>
                     <Link to={'/checkout'} ><button className="btn btn-outline-light">Proceed to checkout</button></Link>
                 </div>
-            </div>
-            {shoppingCartItemListDisplay}
-        </div>
+            </section>
+
+            <section>
+                {shoppingCartItemListDisplay}
+            </section>
+        </main>
     )
 }

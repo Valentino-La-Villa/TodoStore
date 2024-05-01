@@ -34,12 +34,12 @@ export default function SocialMediaButtons() {
         )
     })
     return (
-        <div className='d-flex flex-row gap-3 container justify-content-center px-3 col-12 col-md-6 col-xl-5 pt-3 pt-md-0 position-relative '>
+        <section className='d-flex flex-row gap-3 container justify-content-center px-3 col-12 col-md-6 col-xl-5 pt-3 pt-md-0 position-relative '>
             <div className='row'>
                 {socialMediaButtons}
             </div>
             <p className=' d-none d-md-block
             position-absolute translate-middle-y top-50 m-0 fs-5 d-none' style={{fontFamily: 'Bebas Neue'}}>You can find us on</p>
-        </div>
+        </section>
     )
 }

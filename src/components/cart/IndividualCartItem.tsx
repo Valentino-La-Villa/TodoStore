@@ -22,7 +22,7 @@ export default function IndividualCartItem({props}: propsType) {
     }
 
     return (
-        <div>
+        <article>
             <div
             key={props.id}
             className="col-12 d-flex justify-content-center "
@@ -30,12 +30,12 @@ export default function IndividualCartItem({props}: propsType) {
                 <div className="card mb-3 col-12" style={{maxWidth: '800px', maxHeight: '270px'}}>
                     <div className="row g-0">
 
-                        <div className="col-3 overflow-hidden">
+                        <section className="col-3 overflow-hidden">
                             <img src={props.img} style={{height: '150px', objectFit: 'cover', width: '100%'}} className="img-fluid rounded-start" alt="..."/>
-                        </div>
+                        </section>
 
 
-                        <div className="col-7">
+                        <section className="col-7">
                             <div className="card-body p-2 p-sm-3">
                                 <h5 className="card-title d-flex justify-content-between">{props.name} {props.selectedSize !== 'non-applicable' ? <>- {props.selectedSize}</> : false}</h5>
 
@@ -57,9 +57,9 @@ export default function IndividualCartItem({props}: propsType) {
                                     <span className="ms-1 bg-danger p-1 rounded-1 text-white text-center" style={{fontSize: '12px'}}>{props.discount}% OFF!</span>}
                                 </p>
                             </div>
-                        </div>
+                        </section>
 
-                        <div className="col-2 p-3 text-end d-flex flex-column justify-content-between">
+                        <section className="col-2 p-3 text-end d-flex flex-column justify-content-between">
                             <h5><span className="bg-body-secondary border border-black px-2">{props.amountOnCart}</span></h5>
                             <div>
                                 <img src={trashCanRed} alt=""
@@ -67,10 +67,10 @@ export default function IndividualCartItem({props}: propsType) {
                                 className="me-1"
                                 onClick={removeAll} />
                             </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     )
 }

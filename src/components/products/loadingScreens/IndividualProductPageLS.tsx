@@ -2,7 +2,7 @@ import { CircularProgress, Skeleton } from "@mui/material";
 
 export default function LoadingScreenIndividualProductPage() {
     return (
-        <div className="p-2 p-sm-0">
+        <main className="p-2 p-sm-0">
 
             <Skeleton className="ms-4 mt-4 bg-dark" width='200px' height='70px'/>
 
@@ -34,6 +34,6 @@ export default function LoadingScreenIndividualProductPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     )
 }
